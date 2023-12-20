@@ -1,0 +1,1 @@
+This is a Image Uploader created using node.js. It can be hosted on Herooku,Render and many more. I personallu uploaded it on ngrok.There still are many improvements to do in the upcoming future.I am planning to create an app
