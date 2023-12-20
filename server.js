@@ -10,6 +10,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("views"));
 let uploadPath = "";
+mongoose.set('strictQuery', true);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
