@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const fs = require("fs");
 const File = require("./models/File");
 const ngrok = require("ngrok");
+mongoose.set('strictQuery', true);
 
 const express = require("express");
 const app = express();
