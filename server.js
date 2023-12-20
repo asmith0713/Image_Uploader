@@ -1,16 +1,15 @@
 require("dotenv").config();
 const multer = require("multer");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const fs = require("fs");
-const File = require("./models/File");
-const ngrok = require("ngrok");
-
+const TelegramBot = require('node-telegram-bot-api');
+const botToken = process.env.TELEGRAM_BOT_TOKEN;
+const bot = new TelegramBot(botToken, { polling: true });
 const express = require("express");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("views"));
-let uploadPath = ""; // Define a variable to store the upload path
+let uploadPath = "";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -41,26 +40,18 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload", upload.array("files"), async (req, res) => {
-  const filesData = req.files.map((file) => ({
-    path: file.path,
-    originalName: file.originalname,
-  }));
-
-  if (req.body.password != null && req.body.password !== "") {
-    for (const fileData of filesData) {
-      fileData.password = await bcrypt.hash(req.body.password, 10);
-    }
-  }
-
-  const files = await File.create(filesData);
-
-  // Reset uploadPath for the next upload session
-  uploadPath = "";
-
+  req.files.forEach((file) => {
+    bot.sendDocument(process.env.TELEGRAM_CHAT_ID, file.path)
+      .then(() => {
+        fs.unlinkSync(file.path);
+      })
+      .catch((error) => {
+      });
+  });
   res.render("thank");
+  uploadPath = "";
 });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });
-
