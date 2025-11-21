@@ -205,7 +205,7 @@ Make sure to:
 
 ## License
 
-ISC
+MIT
 
 ## Author
 
