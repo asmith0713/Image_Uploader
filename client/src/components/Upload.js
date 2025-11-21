@@ -14,8 +14,6 @@ function Upload() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-
   const validateAndProcessFiles = (selectedFiles) => {
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
     const processedFiles = [];
@@ -25,11 +23,6 @@ function Upload() {
     Array.from(selectedFiles).forEach(file => {
       if (!validTypes.includes(file.type)) {
         errors.push(`${file.name}: Invalid file type`);
-        return;
-      }
-      
-      if (file.size > MAX_FILE_SIZE) {
-        errors.push(`${file.name}: File too large (max 10MB)`);
         return;
       }
 
@@ -207,7 +200,7 @@ function Upload() {
                     <span className="format-badge">GIF</span>
                     <span className="format-badge">WebP</span>
                   </div>
-                  <p className="text-muted small mt-3" style={{fontSize: '0.85rem'}}>Maximum file size: 10MB</p>
+                  <p className="text-muted small mt-3" style={{fontSize: '0.85rem'}}>No file size limit</p>
                 </div>
                 <input
                   ref={fileInputRef}
