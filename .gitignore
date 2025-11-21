@@ -42,3 +42,9 @@ coverage/
 
 # Misc
 *.pem
+
+# Markdown notes
+DESIGN.md
+FEATURES.md
+MIGRATION_GUIDE.md
+OUICK_START.md
